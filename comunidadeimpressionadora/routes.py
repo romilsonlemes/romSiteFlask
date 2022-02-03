@@ -35,7 +35,11 @@ def login():
             # Exibir msg de Login Bem Sucedido
             print(f"Login Realizado com sucesso pelo email: {form_login.email.data}")
             flash(f"Login feito com sucesso no email: {form_login.email.data}", "alert-success")
-            return redirect(url_for('home'))
+            param_next = request.args.get('next')
+            if param_next:
+                return redirect(param_next)
+            else:
+                return redirect(url_for('home'))
         else:
             flash(f"Falha no Login: {form_login.email.data} ou Senha errada !!", "alert-danger")
 
