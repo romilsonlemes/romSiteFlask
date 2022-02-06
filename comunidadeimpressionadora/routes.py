@@ -8,7 +8,6 @@ import secrets
 import os
 from PIL import Image # Biblioteca para compactar Imagem
 
-listaUsuarios = ['Romilson', 'Thiago', 'Juan', 'Juliano', 'Valquiria', 'Marcelo', 'Ivens']
 
 # Configuração Inicial
 @app.route('/')
@@ -22,7 +21,7 @@ def contato():
 @app.route('/usuarios')
 @login_required
 def usuarios():
-    listaUsuarios.sort()
+    listaUsuarios = Usuario.query.all()
     return render_template('usuarios.html', listaUsuarios=listaUsuarios)
 
 @app.route('/login', methods=['GET', 'POST'])
