@@ -17,7 +17,7 @@ class Usuario(database.Model, UserMixin):
     # Criar relacionamentos entre tabelas
     # Posts dos usuários
     posts = database.relationship('Post', backref='autor', lazy=True)
-    cursos = database.Column(database.String, nullable=False, default='Não informado')
+    cursos = database.Column(database.String, nullable=False, default='Não Informado')
 
 
 class Post(database.Model):
