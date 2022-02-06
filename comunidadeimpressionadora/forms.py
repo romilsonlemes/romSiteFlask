@@ -31,6 +31,17 @@ class FormEditarPerfil(FlaskForm):
     username        = StringField('Nome de Usuário', validators=[DataRequired()])
     email           = StringField('E-mail', validators=[DataRequired(), Email()])
     foto_perfil = FileField('Atualizar Foto de Perfil', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
+
+    # ---------------------------------------------------
+    # ------         Cursos da Hash TAG            ------
+    # ---------------------------------------------------
+    curso_Excel     = BooleanField('Excel Impressionador')
+    curso_Vba       = BooleanField('VBA Impressionador')
+    curso_Python    = BooleanField('Python Impressionador')
+    curso_PowerBi   = BooleanField('Power BI Impressionador')
+    curso_ppt       = BooleanField('Apresentações Impressionadoras')
+    curso_Sql       = BooleanField('SQL Impressionador')
+    # ---------------------------------------------------
     botao_submit_EditarPerfil = SubmitField('Confirmar Edição')
 
     def validate_email(self, email):
