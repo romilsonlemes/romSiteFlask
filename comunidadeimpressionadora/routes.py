@@ -98,6 +98,15 @@ def salvar_imagem(imagem):
     return nome_arquivo_foto
 
 
+def atualizar_cursos(form):
+    lista_cursos = []
+    for campo in form:
+        if 'curso_' in campo.name:
+            if campo.data: # Verifica se o combo do curso foi marcado
+                lista_cursos.append(campo.label.text)
+    return ';'.join(lista_cursos) # Retorna a lista de Cursos separados por ;
+
+
 @app.route('/perfil/editar', methods=['GET', 'post'])
 @login_required
 def editar_perfil():
@@ -109,6 +118,9 @@ def editar_perfil():
         if form.foto_perfil.data:
             nome_imagem = salvar_imagem(form.foto_perfil.data)
             current_user.foto_perfil = nome_imagem
+        # Salvar os Cursos Escolhidos pelo Usuário
+        current_user.cursos = atualizar_cursos(form)
+        print (current_user.cursos)
         database.session.commit()
         flash('Perfil atualizado com Sucesso', 'alert-success')
         return redirect(url_for('perfil'))
