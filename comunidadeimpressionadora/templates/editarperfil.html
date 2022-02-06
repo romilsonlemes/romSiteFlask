@@ -46,6 +46,20 @@
                                {% endif %}
                            </div>
                            <!-- Fim do Bloco para o upload da Foto do Perfil -->
+
+                          <!-- Cursos do usuário -->
+                           <hr>
+                           <p><strong>Cursos</strong></p>
+                           <hr>
+                           {% for campo in form %}
+                                {% if 'curso_' in campo.name %}
+                                        <div class="form-group">
+                                            {{ campo(class="form-check-input") }}
+                                            {{ campo.label(class="form-check-label") }}
+                                        </div>
+                                        <br>
+                                {% endif %}
+                           {% endfor %}
                        </fieldset>
                        {{ form.botao_submit_EditarPerfil(class="btn btn-primary mt-2") }}
                    </form>
