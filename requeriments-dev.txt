@@ -15,6 +15,7 @@ itsdangerous==2.0.1
 Jinja2==3.0.2
 MarkupSafe==2.0.1
 mccabe==0.6.1
+Pillow==9.0.1
 pycodestyle==2.8.0
 pycparser==2.21
 pyflakes==2.4.0
@@ -23,4 +24,3 @@ six==1.16.0
 SQLAlchemy==1.4.31
 Werkzeug==2.0.2
 WTForms==3.0.1
--r requirements.txt
