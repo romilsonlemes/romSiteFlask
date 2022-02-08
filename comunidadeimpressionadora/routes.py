@@ -12,7 +12,7 @@ from PIL import Image # Biblioteca para compactar Imagem
 # Configuração Inicial
 @app.route('/')
 def home():
-    posts = Post.query.all()
+    posts = Post.query.order_by(Post.id.desc()) # ordernar os registros pela Ordem Decrente
     return render_template('home.html', posts=posts)
 
 @app.route('/contato')
