@@ -1,8 +1,8 @@
 import flask_bcrypt
 from flask import render_template, redirect, url_for, flash, request
 from comunidadeimpressionadora import app, database, bcrypt
-from comunidadeimpressionadora.forms import FormLogin, FormCriarConta, FormEditarPerfil
-from comunidadeimpressionadora.models import Usuario
+from comunidadeimpressionadora.forms import FormLogin, FormCriarConta, FormEditarPerfil, FormCriarPost
+from comunidadeimpressionadora.models import Usuario, Post
 from flask_login import login_user, logout_user, current_user, login_required
 import secrets
 import os
@@ -106,7 +106,7 @@ def atualizar_cursos(form):
     return ';'.join(lista_cursos) # Retorna a lista de Cursos separados por ;
 
 
-@app.route('/perfil/editar', methods=['GET', 'post'])
+@app.route('/perfil/editar', methods=['GET', 'POST'])
 @login_required
 def editar_perfil():
     form = FormEditarPerfil()
@@ -131,10 +131,22 @@ def editar_perfil():
     return render_template('editarperfil.html', foto_perfil=foto_perfil, form=form)
 
 
-@app.route('/post/criar')
+@app.route('/post/criar', methods=['GET', 'POST'])
 @login_required
 def criar_post():
-    return render_template('criarpost.html')
+    form = FormCriarPost()
+    if form.validate_on_submit():
+        post  = Post(titulo=form.titulo.data, corpo=form.corpo.data, autor=current_user)
+
+        # Adicionar a Sessão e commitar o Registro
+        database.session.add(post)
+        database.session.commit()
+
+        print(f"Criado o Post com o título: {form.titulo.data} com sucesso")
+        flash(f"Criado o Post com o título: {form.corpo.data}", "alert-success")
+        return redirect(url_for('home'))
+    return render_template('criarpost.html', form=form)
+
 
 
 
