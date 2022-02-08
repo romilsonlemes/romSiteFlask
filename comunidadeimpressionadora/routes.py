@@ -12,7 +12,8 @@ from PIL import Image # Biblioteca para compactar Imagem
 # Configuração Inicial
 @app.route('/')
 def home():
-    return render_template('home.html')
+    posts = Post.query.all()
+    return render_template('home.html', posts=posts)
 
 @app.route('/contato')
 def contato():
