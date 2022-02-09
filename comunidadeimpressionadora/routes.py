@@ -148,9 +148,23 @@ def criar_post():
         return redirect(url_for('home'))
     return render_template('criarpost.html', form=form)
 
-@app.route('/post/<post_id>')
+@app.route('/post/<post_id>', methods=['GET', 'POST'])
+@login_required
 def exibir_post(post_id):
     post = Post.query.get(post_id)
-    return render_template('post.html', post=post)
-
-
+    # Verificar se o Usuário que esta chamando se ele é o dono do Post
+    if current_user == post.autor:
+        form = FormCriarPost()
+        if request.method == 'GET':
+            form.titulo.data = post.titulo
+            form.corpo.data = post.corpo
+        elif form.validate_on_submit():
+            # Atualizar os dados do Post do dono do Post
+            post.titulo = form.titulo.data
+            post.corpo = form.corpo.data
+            database.session.commit()
+            flash('Post atualizado com Sucesso', 'alert-success')
+            return redirect(url_for('home'))
+    else:
+        form = None
+    return render_template('post.html', post=post, form=form)
