@@ -20,7 +20,7 @@
                     <h3>{{ post.titulo }}
                     <small class="text-muted" style="font-size: 15px"> - Data de Criação: {{ post.data_criacao.strftime('%d/%m/%Y') }}
                         {% if form %}
-                        - <a href="#form_editarpost"> Editar Post</a> / <a href="#" data-bs-toggle="modal" data-bs-target="#staticExcluirPost">Excluir Post</a>
+                        - <a href="#form_editarpost"> Editar Post</a> / <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#staticExcluirPost">Excluir Post</a>
                         {% endif %}
                     </small>
                     </h3>
@@ -81,11 +81,13 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            Você realmente deseja excluir o Post ?
+            Você quer realmente excluir o Post? Essa ação não pode ser desfeita
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary">Confirmar</button>
+              <form method="POST" action="{{ url_for('excluir_post', post_id=post.id) }}">
+                <button type="submit" class="btn btn-danger">Excluir Post</button>
+              </form>
           </div>
         </div>
       </div>
